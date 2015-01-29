@@ -15,22 +15,22 @@ import org.springframework.util.Assert;
 
 @Component
 @Aspect
-public aspect GuageAspect {
+public class GuageAspect {
 
     @Autowired
     private GaugeService guageService;
 
-    @Around("com.ftzen.spring.TestService.sitAndSleepThenReturnString")
-    public Object runTimer(ProceedingJoinPoint pjp) throws Throwable {
+    @Around("@annotation(metricTimer)")
+    public Object runTimer(ProceedingJoinPoint pjp,MetricTimer metricTimer) throws Throwable {
 
-  //      Assert.notNull(metricTimer);
+        Assert.notNull(metricTimer);
         Assert.notNull(guageService);
-//        String metricName = metricTimer.value();
+        String metricName = metricTimer.value();
         long startTime = System.currentTimeMillis();
         Object returnObj = pjp.proceed();
         long endTime = System.currentTimeMillis();
         Long totalTime = endTime - startTime;
- //       guageService.submit(metricName,totalTime.doubleValue());
+        guageService.submit(metricName,totalTime.doubleValue());
         return returnObj;
     }
 
