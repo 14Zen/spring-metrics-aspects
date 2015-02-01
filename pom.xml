@@ -2,12 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.14zen.platform</groupId>
-  <artifactId>metrics-core</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <groupId>com.ftzen.spring</groupId>
+  <artifactId>spring-metrics-core</artifactId>
+  <version>1.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>metrics-core</name>
+  <name>spring-metrics-core</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -21,7 +21,24 @@
     <version>1.2.0.RELEASE</version>
   </parent>
 
+  <distributionManagement>
+    <repository>
+      <id>x2-repo-local-releases</id>
+      <name>x2-repo-local-releases</name>
+      <url>http://nexus.admin.cl.x2bio.com/content/repositories/releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>x2-repo-local-snapshot</id>
+      <name>x2-repo-local-snapshot</name>
+      <url> http://nexus.admin.cl.x2bio.com/content/repositories/snapshots/ </url>
+    </snapshotRepository>
+  </distributionManagement>
   <dependencies>
+    <dependency>
+      <groupId>com.timgroup</groupId>
+      <artifactId>java-statsd-client</artifactId>
+      <version>3.0.1</version>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>

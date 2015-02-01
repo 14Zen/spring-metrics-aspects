@@ -1,4 +1,4 @@
-package com.ftzen.spring.annotation;
+package com.ftzen.spring.metrics.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package com.ftzen.spring.services;
+package com.ftzen.spring.metrics.test.support;
 
 /**
  * Created by  <a href="mailto:ranbir.chawla@14zen.com">Ranbir Chawla</a> on 1/27/15.

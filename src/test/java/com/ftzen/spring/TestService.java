@@ -1,8 +1,8 @@
 package com.ftzen.spring;
 
-import com.ftzen.spring.annotation.FailureCounter;
-import com.ftzen.spring.annotation.SuccessCounter;
-import com.ftzen.spring.annotation.MetricTimer;
+import com.ftzen.spring.metrics.annotation.FailureCounter;
+import com.ftzen.spring.metrics.annotation.MetricTimer;
+import com.ftzen.spring.metrics.annotation.SuccessCounter;
 import org.springframework.stereotype.Component;
 
 /**

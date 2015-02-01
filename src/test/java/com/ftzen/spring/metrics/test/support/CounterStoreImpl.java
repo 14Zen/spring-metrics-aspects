@@ -1,4 +1,6 @@
-package com.ftzen.spring.services;
+package com.ftzen.spring.metrics.test.support;
+
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +8,7 @@ import java.util.Map;
 /**
  * Created by  <a href="mailto:ranbir.chawla@14zen.com">Ranbir Chawla</a> on 1/27/15.
  */
-
+@Component
 public class CounterStoreImpl implements CounterStore {
 
     private Map<String,Integer> counterMap = new HashMap<String, Integer>();

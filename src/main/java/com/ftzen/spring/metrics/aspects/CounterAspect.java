@@ -1,15 +1,12 @@
-package com.ftzen.spring.aspects;
+package com.ftzen.spring.metrics.aspects;
 
-import com.ftzen.spring.annotation.FailureCounter;
-import com.ftzen.spring.annotation.SuccessCounter;
-import org.aspectj.lang.ProceedingJoinPoint;
+import com.ftzen.spring.metrics.annotation.FailureCounter;
+import com.ftzen.spring.metrics.annotation.SuccessCounter;
+import com.timgroup.statsd.StatsDClient;
 import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 /**
  * Created by  <a href="mailto:ranbir.chawla@14zen.com">Ranbir Chawla</a> on 1/27/15.
@@ -20,24 +17,18 @@ import org.springframework.util.Assert;
 public class CounterAspect {
 
     @Autowired
-    private CounterService counterService;
+    private StatsDClient statsDClient;
 
     @After("@annotation(successCounter)")
     public void countSuccess(SuccessCounter successCounter) throws Throwable {
-
-        Assert.notNull(successCounter);
         String metricName = successCounter.value();
-        counterService.increment(metricName);
-
+        statsDClient.increment(metricName);
     }
 
     @After("@annotation(failureCounter)")
     public void countFailure(FailureCounter failureCounter) throws Throwable {
-
-        Assert.notNull(failureCounter);
         String metricName = failureCounter.value();
-        counterService.increment(metricName);
-
+        statsDClient.increment(metricName);
     }
 
 }

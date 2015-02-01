@@ -1,16 +1,14 @@
 package com.ftzen.spring;
 
-import com.ftzen.spring.services.CounterStore;
-import com.ftzen.spring.services.TestCounterService;
-import org.junit.Before;
+import com.ftzen.spring.metrics.test.support.CounterStore;
 import org.junit.Test;
-import static org.junit.Assert.*;
-
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by  <a href="mailto:ranbir.chawla@14zen.com">Ranbir Chawla</a> on 1/27/15.
@@ -22,18 +20,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class CounterTest {
 
     @Autowired
-    private TestCounterService testCounterService;
-
-    @Autowired
     private CounterStore counterStore;
 
     @Autowired
     private TestService testService;
-
-    @Before
-    public void setup() {
-
-    }
 
     @Test
     public void counterSuccessTest() {

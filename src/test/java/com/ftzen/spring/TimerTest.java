@@ -1,16 +1,15 @@
 package com.ftzen.spring;
 
-import com.ftzen.spring.services.GuageStore;
-import com.ftzen.spring.services.TestGuageService;
+import com.ftzen.spring.metrics.test.support.TimerStore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.List;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by  <a href="mailto:ranbir.chawla@14zen.com">Ranbir Chawla</a> on 1/28/15.
@@ -19,24 +18,20 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { TestConfiguration.class})
 @ActiveProfiles(profiles = "unittest")
-public class GuageTest {
-
-
-    @Autowired
-    private TestGuageService testGuageService;
+public class TimerTest {
 
     @Autowired
-    private GuageStore guageStore;
+    private TimerStore timerStore;
 
     @Autowired
     private TestService testService;
 
     @Test
-    public void timerGuageOneRunTest() throws Exception {
-
-        assertNotNull("testGuageService is null",testGuageService);
+    public void timerGuageTwoRunTest() throws Exception {
         testService.sitAndSleepThenReturnString();
-        List<Double> returnValueList = guageStore.getTimeByMetricName("test.metric.counter");
-        assertNotNull("not value list returned",returnValueList);
+        testService.sitAndSleepThenReturnString();
+        Long duration = timerStore.getTimeByMetricName("test.metric.counter");
+        assertNotNull("duration not returned",duration);
+        assertTrue("metric value not large enough",(duration > 1500D && duration < 3000D));
     }
 }
