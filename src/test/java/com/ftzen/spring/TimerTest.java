@@ -1,5 +1,6 @@
 package com.ftzen.spring;
 
+import com.ftzen.spring.metrics.config.MetricsConfig;
 import com.ftzen.spring.metrics.test.support.TimerStore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = { TestConfiguration.class})
+@SpringApplicationConfiguration(classes = {TestConfiguration.class})
 @ActiveProfiles(profiles = "unittest")
 public class TimerTest {
 

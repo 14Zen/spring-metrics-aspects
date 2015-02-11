@@ -4,31 +4,20 @@ Standardized Annotations and Aspects to add AOP metrics point cuts to services m
 ## Leveraging StatsD
 This project includes the <a href="https://github.com/tim-group/java-statsd-client">java-statsd-client</a> to communicate with a standard StatsD server. 
 
-At this time there is not yet a Spring AutoConfig, so it will be necessary to create a StatsDClient in the bean factory. An example of a working config is in the example below. This will also include the MetricsExportScheduler. No further configuration is need, as the aspects Autowire the statsDClient bean.
+To incorporate the statsDClient and all the aspects import MetricsConfig.class in your main project configuration.
 
-This bean will periodically generate a list of SystemPublicMetrics to export as StatsD Guages to the server. 
+	@Import("MetricsConfig")
 
-<code>
-@Configuration
+To configure the statsD host and metrics prefix information set the following properties:
 
-@ComponentScan("com.ftzen.spring.metrics.export")
 
-public class MetricsConfig {
+	statsd.prefix=<your prefix>
+	statsd.host=<statsD host name>
 
-    @Value("${statsd.prefix}")
-    
-    private String statsDPrefix;
+The statsD client will use the standard UDP port of 8125 by default. There is no method at this point to override that.
 
-    @Value("${statsd-host}")
-    private String statsDHost;
-
-    @Bean
-    public StatsDClient statsDClient() {
-        StatsDClient statsd = new NonBlockingStatsDClient(statsDPrefix, statsDHost, 8125);
-        return statsd;
-    }
-}
-</code>
+## Exporting Spring System Metrics to StatsD
+By importing MetricsConfig you are also configuring the MetricsExportScheduler bean. This bean will fire every 30 seconds and retrieve all the System level metrics exposed by Spring Boot. These metrics will be sent as Gauges to StatsD using the prefix configured above.
 
 ## Using StatsD aspects
 ### Counters
@@ -40,11 +29,11 @@ Metric naming is key, a good guide can be found in Matt Aimonetti's well known <
 To add a method timer using Spring AOP Around advice use the @MetricTimer annotation with the metric name as the value. 
 
 ###Example
-<code>
+
     @SuccessCounter("svcs.myservice.myendpoint")
     @MetricTimer("svcs.myservice.myendpoint")
     public MyObject getMyObject(.....);
-</code>
+
 
 
 

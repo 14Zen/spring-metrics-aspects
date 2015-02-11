@@ -22,7 +22,7 @@ public class MetricsExportScheduler {
     @Autowired
     private StatsDClient statsDClient;
 
-    @Scheduled(fixedDelay=10000)
+    @Scheduled(fixedDelay=30000)
     public void exportMetrics() {
         logger.debug("exporting metrics");
         SystemPublicMetrics publicMetrics = new SystemPublicMetrics();
