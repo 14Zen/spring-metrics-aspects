@@ -35,7 +35,7 @@ To add a method timer using Spring AOP Around advice use the @MetricTimer annota
     public MyObject getMyObject(.....);
 
 ##Capturing Docker Container ID
-Docker Container runtime environments include the truncated ContainerID as a HOSTNAME environmental variable. This project leverages the Spring Environment to determine if the process environment variables container a HOSTNAME variable it will be captured and added to the end of the StatsD prefix. 
+Docker Container runtime environments include the truncated ContainerID as a HOSTNAME environmental variable. This project leverages the Spring Environment to determine if the process environment variables exposes a HOSTNAME variable. If so it will be captured and added to the end of the StatsD prefix. 
 
 For example if the ContainerID is 5825f8bd516f the metric prefix based on the configuration above would be 
 <code>your.prefix.5825f8bd516f.myservice.myendpoint</code> . 
