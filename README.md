@@ -30,10 +30,20 @@ To add a method timer using Spring AOP Around advice use the @MetricTimer annota
 
 ###Example
 
-    @SuccessCounter("svcs.myservice.myendpoint")
-    @MetricTimer("svcs.myservice.myendpoint")
+    @SuccessCounter("myservice.myendpoint")
+    @MetricTimer("myservice.myendpoint")
     public MyObject getMyObject(.....);
 
+##Capturing Docker Container ID
+Docker Container runtime environments include the truncated ContainerID as a HOSTNAME environmental variable. This project leverages the Spring Environment to determine if the process environment variables container a HOSTNAME variable it will be captured and added to the end of the StatsD prefix. 
 
+For example if the ContainerID is 5825f8bd516f the metric prefix based on the configuration above would be 
+<code>your.prefix.5825f8bd516f.myservice.myendpoint</code> . 
+
+This will allow for the use of * wildcard in graphite/grafana queries 
+
+<code>stats.counters.your.prefix.*.myservice.myendpoint</code>
+
+and the display of metrics PER CONTAINER and allow for you use the aggregation/sum functions as well to get an overall view of the container environment.
 
 
