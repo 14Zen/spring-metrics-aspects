@@ -2,6 +2,7 @@ package com.ftzen.spring.metrics.aspects;
 
 import com.ftzen.spring.metrics.annotation.FailureCounter;
 import com.ftzen.spring.metrics.annotation.SuccessCounter;
+import com.ftzen.spring.metrics.config.ContainerPrefix;
 import com.timgroup.statsd.StatsDClient;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,16 +18,19 @@ import org.springframework.stereotype.Component;
 public class CounterAspect {
 
     @Autowired
+    ContainerPrefix containerPrefix;
+
+    @Autowired
     private StatsDClient statsDClient;
 
     @After("@annotation(successCounter)")
     public void countSuccess(SuccessCounter successCounter) throws Throwable {
-        statsDClient.increment(successCounter.value());
+        statsDClient.increment(containerPrefix.fullMetricName(successCounter.value()));
     }
 
     @After("@annotation(failureCounter)")
     public void countFailure(FailureCounter failureCounter) throws Throwable {
-        statsDClient.increment(failureCounter.value());
+        statsDClient.increment(containerPrefix.fullMetricName(failureCounter.value()));
     }
 
 }

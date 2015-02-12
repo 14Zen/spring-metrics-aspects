@@ -1,5 +1,6 @@
 package com.ftzen.spring.metrics.export;
 
+import com.ftzen.spring.metrics.config.ContainerPrefix;
 import com.timgroup.statsd.StatsDClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +23,17 @@ public class MetricsExportScheduler {
     @Autowired
     private StatsDClient statsDClient;
 
+    @Autowired
+    ContainerPrefix containerPrefix;
+
     @Scheduled(fixedDelay=30000)
     public void exportMetrics() {
         logger.debug("exporting metrics");
         SystemPublicMetrics publicMetrics = new SystemPublicMetrics();
         Collection<Metric<?>> metrics = publicMetrics.metrics();
         for(Metric<?> metric: metrics) {
-            statsDClient.recordGaugeValue(metric.getName(), metric.getValue().longValue());
+            logger.debug("metric->{} value->{}", containerPrefix.fullMetricName(metric.getName()), metric.getValue().longValue());
+            statsDClient.recordGaugeValue(containerPrefix.fullMetricName(metric.getName()), metric.getValue().longValue());
         }
     }
 }
