@@ -25,12 +25,12 @@ public class CounterAspect {
 
     @After("@annotation(successCounter)")
     public void countSuccess(SuccessCounter successCounter) throws Throwable {
-        statsDClient.increment(containerPrefix.fullMetricName(successCounter.value()));
+        statsDClient.incrementCounter(containerPrefix.fullMetricName(successCounter.value()));
     }
 
     @After("@annotation(failureCounter)")
     public void countFailure(FailureCounter failureCounter) throws Throwable {
-        statsDClient.increment(containerPrefix.fullMetricName(failureCounter.value()));
+        statsDClient.incrementCounter(containerPrefix.fullMetricName(failureCounter.value()));
     }
 
 }

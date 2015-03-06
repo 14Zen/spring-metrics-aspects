@@ -55,7 +55,6 @@ public class MetricsConfig {
     public ContainerPrefix metricSuffix() {
         ContainerPrefix containerPrefix = new ContainerPrefix();
         String containerId = env.getProperty("HOSTNAME");
-        logger.info("HEY--- containerId IS->{}", containerId);
         if(StringUtils.hasText(containerId)) {
             containerPrefix.setPrefixValue(containerId);
             containerPrefix.setHasPrefix(true);
