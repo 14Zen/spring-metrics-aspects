@@ -25,16 +25,16 @@ To add a counter for a method using the @SuccessCounter or @FailureCounter annot
 
 Metric naming is key, a good guide can be found in Matt Aimonetti's well known <a href="http://matt.aimonetti.net/posts/2013/06/26/practical-guide-to-graphite-monitoring/">blog post</a>.
 
-###Timer
+### Timer
 To add a method timer using Spring AOP Around advice use the @MetricTimer annotation with the metric name as the value. 
 
-###Example
+### Example
 
     @SuccessCounter("myservice.myendpoint")
     @MetricTimer("myservice.myendpoint")
     public MyObject getMyObject(.....);
 
-##Capturing Docker Container ID
+## Capturing Docker Container ID
 Docker Container runtime environments include the truncated ContainerID as a HOSTNAME environmental variable. This project leverages the Spring Environment to determine if the process environment variables exposes a HOSTNAME variable. If so it will be captured and added to the end of the StatsD prefix. 
 
 For example if the ContainerID is 5825f8bd516f the metric prefix based on the configuration above would be 
